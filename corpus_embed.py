@@ -5,11 +5,11 @@ from sentence_transformers import SentenceTransformer, util
 
 # Main Class
 class CorpusEmbed(object):
-    def __init__(self, model='allenai-specter', load_file=None, sentence_df=None, sentence_column='sentence', id_column='id'):
+    def __init__(self, model='allenai-specter', load_file=None, sentence_df=None, sentence_column='sentence'):
 
         assert (load_file is not None) != (sentence_df is not None), "Either a file or a DataFrame must be provided"
 
-        self.id_column = id_column
+        # self.id_column = id_column
         self.sentence_column = sentence_column
 
         # load the model
@@ -24,14 +24,14 @@ class CorpusEmbed(object):
         if load_file is not None:
             self.load_embeddings(load_file)
         else:
-            self.make_embeddings(sentence_df, sentence_column, id_column)
+            self.make_embeddings(sentence_df, sentence_column)
 
 
-    def make_embeddings(self, sentence_df, sentence_column='sentence', id_column='id'):
+    def make_embeddings(self, sentence_df, sentence_column='sentence'):
 
         assert type(sentence_df) == pd.DataFrame, "sentence_df must be a pandas DataFrame"
         assert sentence_column in sentence_df.columns, "The sentence_column must be present in the DataFrame"
-        assert id_column in sentence_df.columns, "The id_column must be present in the DataFrame"
+        # assert id_column in sentence_df.columns, "The id_column must be present in the DataFrame"
 
         # store metadata dataframe
         self.metadata = sentence_df
@@ -82,14 +82,13 @@ class CorpusEmbed(object):
         print("Done!")
 
 
-    def extend_embeddings(self, sentence, sentence_id, metadata):
+    def extend_embeddings(self, sentence, metadata):
         
         assert type(sentence) == str, "sentence must be a string"
         
         # update metadata
         # if some metadata is missing, fill it with NAs
         # BUG: unchecked
-        metadata[self.id_column] = sentence_id
         metadata[self.sentence_column] = sentence
         self.metadata = self.metadata.append(metadata, ignore_index=True)
 
