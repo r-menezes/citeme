@@ -142,6 +142,11 @@ def create_sentence_df(json_file, selected_columns, sentence_column='sentence', 
         for s in sentences:
             # ...create a new entry with the sentence and the metadata...
             sentence_entry = {key: entry[key] for key in entry if key not in selected_columns}
+            
+            # add title back to the sentence entry
+            if "title" in selected_columns and "title" in entry:
+                sentence_entry["title"] = entry["title"]
+            
             sentence_entry[sentence_column] = s
             
             # ...and add it to the list
