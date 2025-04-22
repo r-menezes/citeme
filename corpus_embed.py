@@ -113,11 +113,32 @@ class CorpusEmbed(object):
             # related_paper = self.metadata.iloc[hit["corpus_id"]]
 
             # print all available metadata in a neat way
-            print(f"{'-'*10}")
-            # for col in related_paper.columns:
-                # print(f"{col}: {related_paper[col].values[0]}")
-            for key in columns:
-                print(f"{key}: {self.metadata[key].iloc[hit['corpus_id']]}")
-
+            print(f"\n{'-'*10}")
             print(f"Similarity: {hit['score']}")
+            self.print_format_reference(hit['corpus_id'])
             print(f"{'-'*10}")
+
+    def print_format_reference(self, idx):
+        columns = self.metadata.keys()
+
+        if "title" in columns:
+            print(f"Title: {self.metadata['title'].iloc[idx]}")
+
+        if "authors" in columns:
+            print(f"Authors: {self.metadata['authors'].iloc[idx]}")
+
+        if "update_date" in columns:
+            print(self.metadata['update_date'].iloc[idx])
+
+        if "doi" in columns:
+            print(f"DOI: https://doi.org/{self.metadata['doi'].iloc[idx]}")
+
+        if "id" in columns:
+            print(f"arXiV: https://arxiv.org/abs/{self.metadata['id'].iloc[idx]}")
+
+        if "sentence" in columns:
+            print(f"Sentence: {self.metadata['sentence'].iloc[idx]}")
+
+        if "abstract" in columns:
+            print("")
+            print(f"Abstract: {self.metadata['abstract'].iloc[idx]}")
