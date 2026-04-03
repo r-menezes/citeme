@@ -1,5 +1,6 @@
 # Busca de artigos acadêmicos com similaridade semântica através de vetorização de sentenças
 
+[![DOI](https://zenodo.org/badge/821439136.svg)](https://doi.org/10.5281/zenodo.19394259)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Repositório contendo o código-fonte desenvolvido para o Trabalho de Conclusão de Curso (TCC) do **MBA USP/ESALQ em Data Science e Analytics**.
