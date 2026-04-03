@@ -57,7 +57,7 @@ class CorpusEmbed(object):
         print("Done!")
 
 
-    def save_embeddings(self, output_folder=".", output_file="embeddings"):
+    def save_embeddings(self, output_folder="data", output_file="embeddings"):
         
         print(f"Saving embeddings to {output_folder}/{output_file}.npy and metadata to {output_folder}/{output_file}_metadata.parquet")
         
@@ -88,7 +88,6 @@ class CorpusEmbed(object):
         
         # update metadata
         # if some metadata is missing, fill it with NAs
-        # BUG: unchecked
         metadata[self.sentence_column] = sentence
         self.metadata = self.metadata.append(metadata, ignore_index=True)
 

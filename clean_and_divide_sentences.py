@@ -62,7 +62,6 @@ def remove_tex_special_characters(text):
         r'\textasciimacron': '¯',
         r'\textasciibreve': '˘',
         r'\textasciicaron': 'ˇ',
-        r'\textasciibreve': '˘',
     }
 
     for character, replacement in tex_characters.items():
