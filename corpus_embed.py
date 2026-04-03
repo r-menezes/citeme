@@ -14,9 +14,9 @@ class CorpusEmbed(object):
 
         # load the model
         print("Loading model...")
-        if type(model) == str:
+        if isinstance(model, str):
             self.model = SentenceTransformer(model)
-        elif type(model) == SentenceTransformer:
+        elif isinstance(model, SentenceTransformer):
             self.model = model
         else:
             raise ValueError("model must be convertable to a SentenceTransformer object")
@@ -29,7 +29,7 @@ class CorpusEmbed(object):
 
     def make_embeddings(self, sentence_df, sentence_column='sentence'):
 
-        assert type(sentence_df) == pd.DataFrame, "sentence_df must be a pandas DataFrame"
+        assert isinstance(sentence_df, pd.DataFrame), "sentence_df must be a pandas DataFrame"
         assert sentence_column in sentence_df.columns, "The sentence_column must be present in the DataFrame"
         # assert id_column in sentence_df.columns, "The id_column must be present in the DataFrame"
 
@@ -84,7 +84,7 @@ class CorpusEmbed(object):
 
     def extend_embeddings(self, sentence, metadata):
         
-        assert type(sentence) == str, "sentence must be a string"
+        assert isinstance(sentence, str), "sentence must be a string"
         
         # update metadata
         # if some metadata is missing, fill it with NAs
@@ -93,7 +93,7 @@ class CorpusEmbed(object):
 
         # update embeddings
         sentence_embedding = self.model.encode(sentence, convert_to_tensor=True)
-        self.embeddings = np.append(self.embeddings, np.array([(sentence_id, sentence_embedding)], dtype=self.embeddings.dtype))
+        self.embeddings = np.vstack([self.embeddings, sentence_embedding])
 
 
     def search_reference(self, phrase):
@@ -101,7 +101,7 @@ class CorpusEmbed(object):
         search_hits = util.semantic_search(query_embedding, self.embeddings)
         search_hits = search_hits[0]  # Get the hits for the first query
 
-        columns = self.metadata.keys()
+        # columns = self.metadata.keys()
 
         # Print the results
         print("\n\nPhrase:", phrase)
